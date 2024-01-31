@@ -6,26 +6,54 @@
     <title>Document</title>
 </head>
 <body>
-    <h5>Employee Management System</h5>
+    <h4>Employee Management System</h4>
     
     <h1>Employee List</h1>
+
+    <form method="get">
+        <label for="search">Search:</label>
+        <input type="text" name="search">
+
+        <label for="age">Age:</label>
+        <input type="number" name="age">
+
+        <label for="dob">DOB:</label>
+        <input type="date" name="dob">
+
+        <label for="salary">Salary:</label>
+        <input type="number" name="salary">
+
+        <label for="department">Department:</label>
+        <input type="text" name="department">
+
+        <input type="submit" value="Filter">
+    </form>
+
     <table border="1">
-        <tr>
-            <th>Full Name</th>
-            <th>Age</th>
-            <th>DOB</th>
-            <th>Salary</th>
-            <th>Department</th>
-        </tr>
-        {% for employee in employees %}
-        <tr>
-            <td>{{ employee.FullName }}</td>
-            <td>{{ employee.Age }}</td>
-            <td>{{ employee.DOB }}</td>
-            <td>{{ employee.Salary }}</td>
-            <td>{{ employee.Department }}</td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Age</th>
+                <th>DOB</th>
+                <th>Salary</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.FullName }}</td>
+                    <td>{{ employee.Age }}</td>
+                    <td>{{ employee.DOB }}</td>
+                    <td>{{ employee.Salary }}</td>
+                    <td>{{ employee.Department }}</td>
+                    <td>
+                        <a href="{% url 'update_employee' employee.id %}">Update</a>
+                        <a href="{% url 'delete_employee' employee.id %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </body>
 </html>
