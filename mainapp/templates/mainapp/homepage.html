@@ -7,5 +7,25 @@
 </head>
 <body>
     <h5>Employee Management System</h5>
+    
+    <h1>Employee List</h1>
+    <table border="1">
+        <tr>
+            <th>Full Name</th>
+            <th>Age</th>
+            <th>DOB</th>
+            <th>Salary</th>
+            <th>Department</th>
+        </tr>
+        {% for employee in employees %}
+        <tr>
+            <td>{{ employee.FullName }}</td>
+            <td>{{ employee.Age }}</td>
+            <td>{{ employee.DOB }}</td>
+            <td>{{ employee.Salary }}</td>
+            <td>{{ employee.Department }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
