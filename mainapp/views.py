@@ -4,17 +4,16 @@ from django.shortcuts import redirect
 import os
 
 
-
 def home(request):
-    # excel_file_path = '..\EmployeeManagement\Employees.xlsx'
-
     project_root = os.path.dirname(os.path.realpath(__file__))
 
     excel_file_path = os.path.join(project_root, 'Employees.xlsx')
     df = pd.read_excel(excel_file_path)
     employees = df.to_dict(orient='records')
     
-
+    context = {
+        'employees':employees,
+    }
     search_query = request.GET.get('search', '')
     age_query = request.GET.get('age', '')
     dob_query = request.GET.get('dob', '')
@@ -24,8 +23,29 @@ def home(request):
     if request.method == 'GET' and any([search_query, age_query, dob_query, salary_query, department_query]):
         df = filter_data(df, search_query, age_query, dob_query, salary_query, department_query)
         employees = df.to_dict(orient='records')
+        context['employees'] = employees
+
+    if request.method == 'GET':
+        if 'total_average_salary' in request.GET:
+                total_average_salary = df['Salary'].mean()
+                context['total_average_salary'] = total_average_salary
+                
+
+    if request.method == 'POST':
+        if 'submit_average_salary' in request.POST:
+            department = request.POST.get('department')
+            department_df = df[df['Department'] == department]
+
+            if not department_df.empty:
+                average_salary = department_df['Salary'].mean()
+
+                context['department_average_salary'] = {
+                    'department': department,
+                    'average_salary': average_salary
+                }
+
     
-    return render(request,'mainapp/homepage.html',{'employees': employees})
+    return render(request,'mainapp/homepage.html',context)
 
 
 def filter_data(df, search_query, age_query, dob_query, salary_query, department_query):
@@ -80,3 +100,6 @@ def delete_employee(request, employee_id):
     df.to_excel(excel_file_path, index=False)
     employees = df.to_dict(orient='records')
     return render(request, 'mainapp/homepage.html',{'employees': employees})
+
+
+
