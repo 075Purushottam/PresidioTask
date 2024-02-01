@@ -16,13 +16,14 @@
         h1 {
             background-color: #333;
             color: #fff;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
+            margin: 0;
         }
 
         form {
             display: flex;
-            margin: 20px 0;
+            margin: 5px 0;
             padding: 10px;
             background-color: #fff;
             border-radius: 6px;
@@ -89,12 +90,18 @@
             margin-left: 15px;
         }
 
+        .avg_sal_ctr{
+            display: flex;
+            justify-content: space-around;
+        }
+
     </style>
 </head>
 <body>
     <h1>Employee Management System</h1>
     
     <h2>Average Salary</h2>
+ <div class="avg_sal_ctr">
     <form method="get">
         <input type="submit" name="total_average_salary" value="Get Total Average Salary">
         <div class="result-box">
@@ -116,6 +123,7 @@
         {% endif %}
         </div>
     </form>
+ </div>
 
 
 
@@ -138,7 +146,8 @@
 
         <input type="submit" value="Filter">
     </form>
-    <h2>Employee List</h2>
+    <h2>Employee List</h2> 
+    <!-- <span>Total Records: {{row_count}}</span> -->
     <table border="1">
         <thead>
             <tr>

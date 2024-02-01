@@ -10,9 +10,10 @@ def home(request):
     excel_file_path = os.path.join(project_root, 'Employees.xlsx')
     df = pd.read_excel(excel_file_path)
     employees = df.to_dict(orient='records')
-    
+    row_count = len(df)
     context = {
         'employees':employees,
+        'row_count':row_count
     }
     search_query = request.GET.get('search', '')
     age_query = request.GET.get('age', '')
